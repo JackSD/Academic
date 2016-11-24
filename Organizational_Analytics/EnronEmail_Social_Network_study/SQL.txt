@@ -1,0 +1,32 @@
+psql -h 129.105.208.226 -U jsd417 -d postgres
+
+
+select count(*) from prep.messages
+select * from prep.messages_table limit 1;
+
+select toaddress, fromaddress, count(messageid) 
+from prep.messages_table
+where toaddress not like '%,%'
+and datetext like '%1999%'
+group by toaddress, fromaddress ; 
+
+select datetext from 
+prep.messages_table
+where datetext like '%1999%'
+limit 1000;
+
+select datetext from 
+prep.messages_table
+where datetext like '%2000%'
+limit 1000;
+
+
+\copy (select toaddress, fromaddress, count(messageid) from prep.messages_table where toaddress not like '%,%' and datetext like '%1999%' group by toaddress, fromaddress) to '1999.csv' with delimiter ','
+
+
+
+select toaddress, fromaddress, count(messageid) 
+from prep.messages_table
+where toaddress not like '%,%'
+group by toaddress, fromaddress ; 
+
